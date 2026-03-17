@@ -1,0 +1,17 @@
+Basic Linux Commands with Descriptions
+
+1. ls - Lists files and directories in the current directory.
+2. cd - Changes the current directory.
+3. pwd - Displays the present working directory.
+4. mkdir - Creates a new directory.
+5. rmdir - Removes an empty directory.
+6. rm - Deletes files or directories.
+7. cp - Copies files or directories.
+8. mv - Moves or renames files or directories.
+9. touch - Creates an empty file.
+10. cat - Displays the content of a file.
+11. echo - Prints text to the terminal or writes to a file.
+12. chmod - Changes file permissions.
+13. chown - Changes file ownership.
+14. df - Displays disk space usage.
+15. top - Shows running processes in real-time.
