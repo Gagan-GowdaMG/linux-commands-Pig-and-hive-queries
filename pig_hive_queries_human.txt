@@ -1,0 +1,125 @@
+Pig and Hive Queries (Simple Explanation Notes)
+
+Dataset used: students.csv
+id,name,age,marks
+1,gagan,20,85
+2,rohan,21,90
+3,reka,19,70
+4,sunil,22,95
+5,anitha,20,60
+
+
+APACHE PIG 
+1) Loading the data
+students = LOAD 'students.csv' USING PigStorage(',')
+AS (id:int, name:chararray, age:int, marks:int);
+
+Explanation:
+Here we are simply telling Pig to read the file. We also define what each column means.
+So Pig understands id is integer, name is text, etc.
+
+
+2) Filtering students with marks > 80
+high_marks = FILTER students BY marks > 80;
+
+Explanation:
+This step is like applying a condition. Only students who scored more than 80 will be kept.
+In our data, it will give gagan, rohan and sunil.
+
+
+3) Selecting only name and marks
+result = FOREACH students GENERATE name, marks;
+
+Explanation:
+Instead of showing all columns, we just pick what we need.
+Here we only display name and marks, ignoring id and age.
+
+
+4) Grouping students by age
+grouped = GROUP students BY age;
+
+Explanation:
+Now we are grouping students based on age.
+For example, age 20 will have gagan and anitha together.
+
+
+5) Counting students in each group
+count_data = FOREACH grouped GENERATE group, COUNT(students);
+
+Explanation:
+After grouping, we count how many students are there in each age group.
+Example: age 20 → 2 students
+
+
+6) Storing the result
+STORE high_marks INTO 'output';
+
+Explanation:
+Finally, we save the result into a folder called 'output'.
+Pig will store it in the Hadoop file system.
+
+
+
+APACHE HIVE 
+
+1) Creating a table
+CREATE TABLE students (
+  id INT,
+  name STRING,
+  age INT,
+  marks INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+Explanation:
+This is just like creating a table in SQL.
+We define column names and their data types.
+
+
+2) Loading data into table
+LOAD DATA INPATH 'students.csv' INTO TABLE students;
+
+Explanation:
+This command loads our CSV file into the Hive table.
+After this, we can run queries on it.
+
+
+3) Displaying all data
+SELECT * FROM students;
+
+Explanation:
+This will show the entire table.
+Useful to check if data is loaded correctly.
+
+
+4) Getting students with marks > 80
+SELECT * FROM students WHERE marks > 80;
+
+Explanation:
+Same as Pig filter. It returns only high scoring students.
+Here we get gagan, rohan and sunil.
+
+
+5) Selecting only required columns
+SELECT name, marks FROM students;
+
+Explanation:
+Instead of all columns, we only fetch name and marks.
+This makes output cleaner.
+
+
+6) Grouping by age
+SELECT age, COUNT(*) FROM students GROUP BY age;
+
+Explanation:
+This groups students by age and counts how many are in each group.
+Example: age 20 → 2 students
+
+
+7) Sorting by marks (highest first)
+SELECT * FROM students ORDER BY marks DESC;
+
+Explanation:
+This arranges students from highest marks to lowest.
+So sunil will come first, then rohan, then gagan, etc.
